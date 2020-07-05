@@ -1,6 +1,6 @@
 
-from tkinter import *
-import tkinter
+# from tkinter import *
+# import tkinter
 import random
 import json
 from keras.models import load_model
@@ -78,13 +78,13 @@ def chatbot_response(msg):
 def chat():
     print("Start talking with the bot (type quit to stop)!")
     while True:
-        inp = input("Fou: ")
+        inp = input("You: ")
         if inp.lower() == "quit":
             break
 
         results = chatbot_response(inp)
 
-        print('Su Ling (A.I): ' + results)
+        print('SL: ' + results)
 
 # def send():
 #     msg = EntryBox.get("1.0", 'end-1c').strip()
