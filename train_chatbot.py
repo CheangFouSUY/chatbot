@@ -1,18 +1,18 @@
+import random
+from keras.optimizers import SGD
+from keras.layers import Dense, Activation, Dropout
+from keras.models import Sequential
+import numpy as np
+import pickle
+import json
+from nltk.stem import WordNetLemmatizer
 import nltk
 nltk.download('punkt')
 nltk.download('wordnet')
-from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
-import json
-import pickle
 
-import numpy as np
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout
-from keras.optimizers import SGD
-import random
 
-words=[]
+words = []
 classes = []
 documents = []
 ignore_words = ['?', '!']
@@ -33,20 +33,21 @@ for intent in intents['intents']:
         if intent['tag'] not in classes:
             classes.append(intent['tag'])
 
-words = [lemmatizer.lemmatize(w.lower()) for w in words if w not in ignore_words]
+words = [lemmatizer.lemmatize(w.lower())
+         for w in words if w not in ignore_words]
 words = sorted(list(set(words)))
 
 classes = sorted(list(set(classes)))
 
-print (len(documents), "documents")
+print(len(documents), "documents")
 
-print (len(classes), "classes", classes)
+print(len(classes), "classes", classes)
 
-print (len(words), "unique lemmatized words", words)
+print(len(words), "unique lemmatized words", words)
 
 
-pickle.dump(words,open('words.pkl','wb'))
-pickle.dump(classes,open('classes.pkl','wb'))
+pickle.dump(words, open('words.pkl', 'wb'))
+pickle.dump(classes, open('classes.pkl', 'wb'))
 
 # initializing training data
 training = []
@@ -57,7 +58,8 @@ for doc in documents:
     # list of tokenized words for the pattern
     pattern_words = doc[0]
     # lemmatize each word - create base word, in attempt to represent related words
-    pattern_words = [lemmatizer.lemmatize(word.lower()) for word in pattern_words]
+    pattern_words = [lemmatizer.lemmatize(
+        word.lower()) for word in pattern_words]
     # create our bag of words array with 1, if word match found in current pattern
     for w in words:
         bag.append(1) if w in pattern_words else bag.append(0)
@@ -71,8 +73,8 @@ for doc in documents:
 random.shuffle(training)
 training = np.array(training)
 # create train and test lists. X - patterns, Y - intents
-train_x = list(training[:,0])
-train_y = list(training[:,1])
+train_x = list(training[:, 0])
+train_y = list(training[:, 1])
 print("Training data created")
 
 
@@ -87,10 +89,12 @@ model.add(Dense(len(train_y[0]), activation='softmax'))
 
 # Compile model. Stochastic gradient descent with Nesterov accelerated gradient gives good results for this model
 sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy',
+              optimizer=sgd, metrics=['accuracy'])
 
-#fitting and saving the model
-hist = model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
+# fitting and saving the model
+hist = model.fit(np.array(train_x), np.array(train_y),
+                 epochs=200, batch_size=5, verbose=1)
 model.save('chatbot_model.h5', hist)
 
 print("model created")

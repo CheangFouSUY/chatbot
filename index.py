@@ -1,12 +1,13 @@
-
-# from tkinter import *
-# import tkinter
 import random
 import json
 from keras.models import load_model
 import numpy as np
 import pickle
 from nltk.stem import WordNetLemmatizer
+
+# from tkinter import *
+# import tkinter
+
 import nltk
 nltk.download('punkt')
 nltk.download('wordnet')
@@ -46,8 +47,11 @@ def predict_class(sentence, model):
     # filter out predictions below a threshold
     p = bow(sentence, words, show_details=False)
     res = model.predict(np.array([p]))[0]
-    ERROR_THRESHOLD = 0.25
+    ERROR_THRESHOLD = 0.6
     results = [[i, r] for i, r in enumerate(res) if r > ERROR_THRESHOLD]
+
+    if not results:
+        return [{'intent': 'noanswer', 'probability': '0.9'}]
     # sort by strength of probability
     results.sort(key=lambda x: x[1], reverse=True)
     return_list = []
@@ -63,6 +67,7 @@ def getResponse(ints, intents_json):
         if(i['tag'] == tag):
             result = random.choice(i['responses'])
             break
+
     return result
 
 
@@ -72,20 +77,21 @@ def chatbot_response(msg):
     return res
 
 
-# Creating GUI with tkinter
-
-
 def chat():
-    print("Start talking with the bot (type quit to stop)!")
+    print("Start talking with AI girlfriend (type quit to stop)!")
     while True:
         inp = input("You: ")
         if inp.lower() == "quit":
             break
 
-        results = chatbot_response(inp)
+        if inp.strip() != '':
+            results = chatbot_response(inp)
+            print('SL: ' + results)
 
-        print('SL: ' + results)
 
+chat()
+
+# Creating GUI with tkinter
 # def send():
 #     msg = EntryBox.get("1.0", 'end-1c').strip()
 #     EntryBox.delete("0.0", END)
@@ -101,8 +107,6 @@ def chat():
 #         ChatLog.config(state=DISABLED)
 #         ChatLog.yview(END)
 
-
-chat()
 
 # base = Tk()
 # base.title("Hello")

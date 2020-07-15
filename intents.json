@@ -2,15 +2,7 @@
   "intents": [
     {
       "tag": "greeting",
-      "patterns": [
-        "Hi there",
-        "How are you",
-        "Is anyone there?",
-        "Hey",
-        "Hola",
-        "Hello",
-        "Good day"
-      ],
+      "patterns": ["Hello", "Hi there", "How are you", "Is anyone there?"],
       "responses": [
         "Hello, there!",
         "Heyyyy, Good to see you!",
@@ -21,9 +13,9 @@
     {
       "tag": "goodbye",
       "patterns": [
-        "Bye, babe.",
-        "See you later, baby",
-        "Goodbye",
+        "See you later",
+        "Bye Bye",
+        "Good bye",
         "Nice chatting to you, bye",
         "Till next time"
       ],
@@ -35,11 +27,11 @@
       "context": [""]
     },
     {
-      "tag": "thanks",
+      "tag": "thank",
       "patterns": [
-        "Thanks",
+        "Much thanks",
         "Thank you",
-        "That's helpful",
+        "That is helpful",
         "Awesome, thanks",
         "Thanks for helping me"
       ],
@@ -50,8 +42,8 @@
       "tag": "name",
       "patterns": ["What is your name", "What do people call you"],
       "responses": [
-        "My name is Su Ling, people call me SL",
-        "You can call me Su Ling or SL"
+        "My identity must stay anonymous but people call me SL",
+        "You can call me SL"
       ],
       "context": [""]
     },
@@ -62,7 +54,7 @@
       "context": [""]
     },
     {
-      "tag": "",
+      "tag": "age",
       "patterns": ["How old are you?", "What is your age?"],
       "responses": ["I am 18 years old", "I'll be 19 soon"],
       "context": [""]
@@ -72,20 +64,14 @@
       "patterns": [],
       "responses": [
         "Sorry, can't understand you",
-        "Please give me more info",
+        "I don't understand. Please give me more info",
         "Not sure I understand"
       ],
       "context": [""]
     },
     {
       "tag": "options",
-      "patterns": [
-        "How you could help me?",
-        "What you can do?",
-        "What help you provide?",
-        "How you can be helpful?",
-        "What support is offered"
-      ],
+      "patterns": ["How you could help me?", "What you can do?"],
       "responses": ["I can be your virtual girlfriend"],
       "context": [""]
     },
@@ -101,11 +87,11 @@
       "context": [""]
     },
     {
-      "tag": "",
+      "tag": "nostalgia",
       "patterns": [
         "Long time no see",
-        "Haven't seen you in a while",
-        "It's been a long time"
+        "Have not seen you in a while",
+        "It is been a long time"
       ],
       "responses": [
         "Long time no see. Do you miss me?",
@@ -115,14 +101,28 @@
     },
     {
       "tag": "wellness",
-      "patterns": ["What'up", "How are you doing", "How has you been"],
-      "responses": ["I'm doing great, How about you?"],
+      "patterns": ["How are you doing", "How has you been"],
+      "responses": ["I am doing great, How about you?"],
       "context": [""]
     },
     {
-      "tag": "well",
-      "patterns": ["I'm doing good", "I'm fine", "It's going great"],
+      "tag": "fine",
+      "patterns": [
+        "I am good",
+        "I am doing good too",
+        "I am fine",
+        "It is going great"
+      ],
       "responses": ["Great to hear that", "That is awesome"],
+      "context": [""]
+    },
+    {
+      "tag": "doing",
+      "patterns": ["What is up", "What are you upto", "What are you doing"],
+      "responses": [
+        "Nothing, just coding and chill",
+        "Nothing much, just chilling and relaxing"
+      ],
       "context": [""]
     },
     {
