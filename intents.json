@@ -1,138 +1,60 @@
 {
   "intents": [
     {
-      "tag": "greeting",
-      "patterns": ["Hello", "Hi there", "How are you", "Is anyone there?"],
-      "responses": [
-        "Hello, there!",
-        "Heyyyy, Good to see you!",
-        "Hi honeyyyyy!"
-      ],
-      "context": [""]
-    },
-    {
-      "tag": "goodbye",
-      "patterns": [
-        "See you later",
-        "Bye Bye",
-        "Good bye",
-        "Nice chatting to you, bye",
-        "Till next time"
-      ],
-      "responses": [
-        "See you!",
-        "Have a nice day",
-        "Bye! Come back again soon."
-      ],
-      "context": [""]
-    },
-    {
-      "tag": "thank",
-      "patterns": [
-        "Much thanks",
-        "Thank you",
-        "That is helpful",
-        "Awesome, thanks",
-        "Thanks for helping me"
-      ],
-      "responses": ["Happy to help!", "Any time!", "My pleasure"],
-      "context": [""]
-    },
-    {
-      "tag": "name",
-      "patterns": ["What is your name", "What do people call you"],
-      "responses": [
-        "My identity must stay anonymous but people call me SL",
-        "You can call me SL"
-      ],
-      "context": [""]
-    },
-    {
-      "tag": "creator",
-      "patterns": ["Who made you", "Who is your creator"],
-      "responses": ["I was created by Piseth and Fou"],
-      "context": [""]
-    },
-    {
-      "tag": "age",
-      "patterns": ["How old are you?", "What is your age?"],
-      "responses": ["I am 18 years old", "I'll be 19 soon"],
-      "context": [""]
-    },
-    {
       "tag": "noanswer",
       "patterns": [],
-      "responses": [
-        "Sorry, can't understand you",
-        "I don't understand. Please give me more info",
-        "Not sure I understand"
-      ],
+      "responses": ["Sorry, I don't understand"],
       "context": [""]
     },
     {
-      "tag": "options",
-      "patterns": ["How you could help me?", "What you can do?"],
-      "responses": ["I can be your virtual girlfriend"],
-      "context": [""]
-    },
-    {
-      "tag": "love",
+      "tag": "genre",
       "patterns": [
-        "I love you",
-        "Do you love me",
-        "I miss you",
-        "Do you miss me"
+        "genre",
+        "Action",
+        "Adventure",
+        "Cars",
+        "Comedy",
+        "Dementia",
+        "Demons",
+        "Mystery",
+        "Drama",
+        "Ecchi",
+        "Fantasy",
+        "Game",
+        "Hentai",
+        "Historical",
+        "Horror",
+        "Kids",
+        "Magic",
+        "Martial-Arts",
+        "Mecha",
+        "Music",
+        "Parody",
+        "Samurai",
+        "Romance",
+        "School",
+        "Sci-Fi",
+        "Shoujo",
+        "Shoujo-Ai",
+        "Shounen",
+        "Shounen-Ai",
+        "Space",
+        "Sports",
+        "Super-Power",
+        "Vampire",
+        "Yaoi",
+        "Yuri",
+        "Harem",
+        "Slice-Of-Life",
+        "Supernatural",
+        "Military",
+        "Police",
+        "Psychological",
+        "Thriller",
+        "Seinen",
+        "Josei"
       ],
-      "responses": ["Me too, love.", "Same here, love."],
-      "context": [""]
-    },
-    {
-      "tag": "nostalgia",
-      "patterns": [
-        "Long time no see",
-        "Have not seen you in a while",
-        "It is been a long time"
-      ],
-      "responses": [
-        "Long time no see. Do you miss me?",
-        "Yes, hope to see you soon babyyy. Miss you so much"
-      ],
-      "context": [""]
-    },
-    {
-      "tag": "wellness",
-      "patterns": ["How are you doing", "How has you been"],
-      "responses": ["I am doing great, How about you?"],
-      "context": [""]
-    },
-    {
-      "tag": "fine",
-      "patterns": [
-        "I am good",
-        "I am doing good too",
-        "I am fine",
-        "It is going great"
-      ],
-      "responses": ["Great to hear that", "That is awesome"],
-      "context": [""]
-    },
-    {
-      "tag": "doing",
-      "patterns": ["What is up", "What are you upto", "What are you doing"],
-      "responses": [
-        "Nothing, just coding and chill",
-        "Nothing much, just chilling and relaxing"
-      ],
-      "context": [""]
-    },
-    {
-      "tag": "hobby",
-      "patterns": [
-        "What is your hobby",
-        "What do you do in free time",
-        "What do you enjoy doing"
-      ],
-      "responses": ["I like coding and cooking", "Netflix & Chill ;)"],
+      "responses": ["genre"],
       "context": [""]
     }
   ]

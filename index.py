@@ -4,6 +4,7 @@ from keras.models import load_model
 import numpy as np
 import pickle
 from nltk.stem import WordNetLemmatizer
+import anime
 
 # from tkinter import *
 # import tkinter
@@ -17,6 +18,9 @@ model = load_model('chatbot_model.h5')
 intents = json.loads(open('intents.json').read())
 words = pickle.load(open('words.pkl', 'rb'))
 classes = pickle.load(open('classes.pkl', 'rb'))
+words_with_tags = pickle.load(open('words_with_tags.pkl', 'rb'))
+
+matched_patterns = []
 
 
 def clean_up_sentence(sentence):
@@ -40,6 +44,10 @@ def bow(sentence, words, show_details=True):
                 bag[i] = 1
                 if show_details:
                     print("found in bag: %s" % w)
+
+    matched_patterns.clear()
+    matched_patterns.extend(bag)
+
     return(np.array(bag))
 
 
@@ -56,86 +64,56 @@ def predict_class(sentence, model):
     results.sort(key=lambda x: x[1], reverse=True)
     return_list = []
     for r in results:
+        matched_tag = classes[r[0]]
         return_list.append({"intent": classes[r[0]], "probability": str(r[1])})
-    return return_list
+
+    matched_patterns_with_tags = []
+
+    for idx, matched in enumerate(matched_patterns):
+        if matched and words_with_tags[idx]['tag'] == matched_tag:
+            # matched_patterns_with_tags.append(words_with_tags[idx]['pattern'])
+            print(words_with_tags[idx]['pattern'])
+            matched_patterns_with_tags.append(str(idx))
+
+    return matched_patterns_with_tags
 
 
-def getResponse(ints, intents_json):
-    tag = ints[0]['intent']
-    list_of_intents = intents_json['intents']
-    for i in list_of_intents:
-        if(i['tag'] == tag):
-            result = random.choice(i['responses'])
-            break
+# def getResponse(ints, intents_json):
+#     tag = ints[0]['intent']
+#     list_of_intents = intents_json['intents']
+#     for i in list_of_intents:
+#         if(i['tag'] == tag):
+#             result = random.choice(i['responses'])
+#             break
 
-    return result
+#     return result
+
+def getResponse(patterns):
+    if not patterns:
+        return 'Sorry I do not understand.'
+
+    res = anime.search(patterns)
+    return 'Hope you enjoy watching these animes.'
 
 
 def chatbot_response(msg):
-    ints = predict_class(msg, model)
-    res = getResponse(ints, intents)
+    # ints = predict_class(msg, model)
+    # res = getResponse(ints, intents)
+    patterns = predict_class(msg, model)
+    res = getResponse(patterns)
     return res
 
 
 def chat():
-    print("Start talking with AI girlfriend (type quit to stop)!")
+    print("Find your favorite anime (type quit to stop)!")
     while True:
-        inp = input("You: ")
+        inp = input("Search: ")
         if inp.lower() == "quit":
             break
 
         if inp.strip() != '':
             results = chatbot_response(inp)
-            print('SL: ' + results)
+            print(results)
 
 
 chat()
-
-# Creating GUI with tkinter
-# def send():
-#     msg = EntryBox.get("1.0", 'end-1c').strip()
-#     EntryBox.delete("0.0", END)
-
-#     if msg != '':
-#         ChatLog.config(state=NORMAL)
-#         ChatLog.insert(END, "You: " + msg + '\n\n')
-#         ChatLog.config(foreground="#442265", font=("Times New Roman", 12))
-
-#         res = chatbot_response(msg)
-#         ChatLog.insert(END, "Bot: " + res + '\n\n')
-
-#         ChatLog.config(state=DISABLED)
-#         ChatLog.yview(END)
-
-
-# base = Tk()
-# base.title("Hello")
-# base.geometry("400x500")
-# base.resizable(width=FALSE, height=FALSE)
-
-# Create Chat window
-# ChatLog = Text(base, bd=0, bg="white", height="8", width="50", font="Arial",)
-
-# ChatLog.config(state=DISABLED)
-
-# Bind scrollbar to Chat window
-# scrollbar = Scrollbar(base, command=ChatLog.yview, cursor="heart")
-# ChatLog['yscrollcommand'] = scrollbar.set
-
-# Create Button to send message
-# SendButton = Button(base, font=("Times New Roman", 12, 'bold'), text="Send", width="12", height=5,
-#                     bd=0, bg="#32de97", activebackground="#3c9d9b", fg='#ffffff',
-#                     command=send)
-
-# # Create the box to enter message
-# EntryBox = Text(base, bd=0, bg="white", width="29", height="5", font="Arial")
-# #EntryBox.bind("<Return>", send)
-
-
-# # Place all components on the screen
-# scrollbar.place(x=376, y=6, height=386)
-# ChatLog.place(x=6, y=6, height=386, width=370)
-# EntryBox.place(x=128, y=401, height=90, width=265)
-# SendButton.place(x=6, y=401, height=90)
-
-# base.mainloop()

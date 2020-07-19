@@ -13,9 +13,10 @@ lemmatizer = WordNetLemmatizer()
 
 
 words = []
+words_with_tags = []
 classes = []
 documents = []
-ignore_words = ['?', '!']
+ignore_words = ['?', '!', '-']
 data_file = open('intents.json').read()
 intents = json.loads(data_file)
 
@@ -26,6 +27,11 @@ for intent in intents['intents']:
         # take each word and tokenize it
         w = nltk.word_tokenize(pattern)
         words.extend(w)
+        words_with_tags.append({
+            'pattern': w[0],
+            'tag': intent['tag']
+        })
+
         # adding documents
         documents.append((w, intent['tag']))
 
@@ -33,9 +39,11 @@ for intent in intents['intents']:
         if intent['tag'] not in classes:
             classes.append(intent['tag'])
 
+
 words = [lemmatizer.lemmatize(w.lower())
          for w in words if w not in ignore_words]
-words = sorted(list(set(words)))
+
+words = list(words)
 
 classes = sorted(list(set(classes)))
 
@@ -48,6 +56,7 @@ print(len(words), "unique lemmatized words", words)
 
 pickle.dump(words, open('words.pkl', 'wb'))
 pickle.dump(classes, open('classes.pkl', 'wb'))
+pickle.dump(words_with_tags, open('words_with_tags.pkl', 'wb'))
 
 # initializing training data
 training = []
