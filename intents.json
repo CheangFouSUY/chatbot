@@ -56,6 +56,15 @@
       ],
       "responses": ["genre"],
       "context": [""]
+    },
+    {
+      "tag": "similar",
+      "patterns": [
+        "similar",
+        "\""
+      ],
+      "responses": ["similarity"],
+      "context": [""]
     }
   ]
 }

@@ -11,11 +11,34 @@ from jikanpy import Jikan
 jikan = Jikan()
 
 
-def search(patterns):
+def search(patterns, query=""):
     print('Loading...')
-    search = jikan.search('anime', '',
-                          parameters={'genre': ','.join(patterns), 'order_by': 'members', 'limit': 10})
+    #when it is similar
+    if len(query):   
+        patterns = [] 
+        search = jikan.search('anime', query,
+                            parameters={'order_by': 'title', 'limit': 1})
+        res = search['results']
+
+        #found the id
+        for (idx, r) in enumerate(res):
+            anime_id = r['mal_id']
+            print(anime_id)
+        
+        #check for genres using jika.anime
+        all_genre = jikan.anime(anime_id)["genres"]
+        
+        #found all genres in the anime, push the id
+        for (idx, r) in enumerate(all_genre):
+            patterns.append(str(r['mal_id']))
+            print(patterns)
+        query = ""
+
+    #search genre
+    search = jikan.search('anime', query,
+                        parameters={'genre': ','.join(patterns), 'order_by': 'members', 'limit': 10})
     res = search['results']
+
 
     print()
     for (idx, r) in enumerate(res):

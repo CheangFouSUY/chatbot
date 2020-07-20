@@ -5,6 +5,7 @@ import numpy as np
 import pickle
 from nltk.stem import WordNetLemmatizer
 import anime
+import re
 
 # from tkinter import *
 # import tkinter
@@ -88,19 +89,19 @@ def predict_class(sentence, model):
 
 #     return result
 
-def getResponse(patterns):
+def getResponse(patterns, name=""):
     if not patterns:
         return 'Sorry I do not understand.'
 
-    res = anime.search(patterns)
+    res = anime.search(patterns, name)
     return 'Hope you enjoy watching these animes.'
 
 
-def chatbot_response(msg):
+def chatbot_response(msg, name=""):
     # ints = predict_class(msg, model)
     # res = getResponse(ints, intents)
     patterns = predict_class(msg, model)
-    res = getResponse(patterns)
+    res = getResponse(patterns, name)
     return res
 
 
@@ -111,7 +112,13 @@ def chat():
         if inp.lower() == "quit":
             break
 
+        #extract in quotes and symbol ...
+        inp_name = re.findall(r'"([^"]*)"', inp)
+        print (inp_name)
+
         if inp.strip() != '':
+            if len(inp_name):
+                results = chatbot_response(inp, inp_name[0])
             results = chatbot_response(inp)
             print(results)
 
