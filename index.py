@@ -126,7 +126,7 @@ def chat():
         if inp.strip() != '':
             if len(inp_name):
                 results = chatbot_response(inp, inp_name[0])
-            results = chatbot_response(inp)
+            #results = chatbot_response(inp)
         # print(results)
 
 
