@@ -10,6 +10,8 @@ from jikanpy import Jikan
 
 jikan = Jikan()
 
+MAX_GENRES_SEARCH = 4
+
 
 def search(patterns, query=""):
     print('Loading...')
@@ -27,11 +29,17 @@ def search(patterns, query=""):
 
         # check for genres using jika.anime
         all_genre = jikan.anime(anime_id)["genres"]
+        # print(all_genre)
 
         # found all genres in the anime, push the id
         for (idx, r) in enumerate(all_genre):
             patterns.append(str(r['mal_id']))
-            # print(patterns)
+
+        # if too many genres, remove the last few
+        if (len(patterns) >= MAX_GENRES_SEARCH):
+            patterns = patterns[:len(
+                patterns)-(len(patterns) % MAX_GENRES_SEARCH)]
+        print(patterns)
         query = ""
 
     # search genre
