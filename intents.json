@@ -59,11 +59,14 @@
     },
     {
       "tag": "similar",
-      "patterns": [
-        "similar",
-        "\""
-      ],
+      "patterns": ["similar", "anime"],
       "responses": ["similarity"],
+      "context": [""]
+    },
+    {
+      "tag": "information",
+      "patterns": ["detail", "info", "information", "more"],
+      "responses": ["information"],
       "context": [""]
     }
   ]

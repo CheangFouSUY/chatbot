@@ -76,6 +76,8 @@ def predict_class(sentence, model):
             print(words_with_tags[idx]['pattern'])
             matched_patterns_with_tags.append(str(idx))
 
+    # print(matched_patterns_with_tags)
+
     return matched_patterns_with_tags
 
 
@@ -112,15 +114,15 @@ def chat():
         if inp.lower() == "quit":
             break
 
-        #extract in quotes and symbol ...
+        # extract in quotes and symbol ...
         inp_name = re.findall(r'"([^"]*)"', inp)
-        print (inp_name)
+        # print (inp_name)
 
         if inp.strip() != '':
             if len(inp_name):
                 results = chatbot_response(inp, inp_name[0])
             results = chatbot_response(inp)
-            print(results)
+            # print(results)
 
 
 chat()
