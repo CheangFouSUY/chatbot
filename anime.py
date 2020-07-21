@@ -17,7 +17,7 @@ INDEX_OF_INFO = 46
 def search(patterns, query=""):
     print('Loading...')
     print(patterns)
-        
+
     # when it is similar
     if len(query):
 
@@ -40,20 +40,20 @@ def search(patterns, query=""):
         all_genre = anime_info["genres"]
         # print(all_genre)
 
-        #when index is in info intent, go with this one
+        # when index is in info intent, go with this one
+        print()
         if(isInfo):
             print("Title: " + anime_info['title'])
-            print("\nDescription: " + anime_info['synopsis'][0:300] + "...")
-            print("\nStatus: " + anime_info['status'])
-            print("\n\nGenres: ")
+            print("Description: " + anime_info['synopsis'][0:300] + "...")
+            print("Status: " + anime_info['status'])
+            print("Genres: ", end="")
             # found all genres in the anime, push the id
             for (idx, r) in enumerate(all_genre):
-                print(str(r['name']))
-            print ()
+                print(str(r['name']), end=", ")
 
-        #otherwise, it means just serach similar
+        # otherwise, it means just serach similar
         else:
-        # found all genres in the anime, push the id
+            # found all genres in the anime, push the id
             for (idx, r) in enumerate(all_genre):
                 patterns.append(str(r['mal_id']))
 
@@ -64,20 +64,18 @@ def search(patterns, query=""):
             print(patterns)
             query = ""
             search = jikan.search('anime', query,
-                            parameters={'genre': ','.join(patterns), 'order_by': 'members', 'limit': 10})
+                                  parameters={'genre': ','.join(patterns), 'order_by': 'members', 'limit': 10})
             res = search['results']
 
-            print()
             for (idx, r) in enumerate(res):
                 print('Title: ' + r['title'])
                 print('Description: ' + r['synopsis'][0:100] + '...')
                 print()
 
-    
     # search genre
     else:
         search = jikan.search('anime', query,
-                            parameters={'genre': ','.join(patterns), 'order_by': 'members', 'limit': 10})
+                              parameters={'genre': ','.join(patterns), 'order_by': 'members', 'limit': 10})
         res = search['results']
 
         print()
