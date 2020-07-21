@@ -23,6 +23,7 @@ words_with_tags = pickle.load(open('words_with_tags.pkl', 'rb'))
 
 matched_patterns = []
 
+INDEX_OF_INFO_INTENT = 46
 
 def clean_up_sentence(sentence):
     sentence_words = nltk.word_tokenize(sentence)
@@ -72,8 +73,10 @@ def predict_class(sentence, model):
 
     for idx, matched in enumerate(matched_patterns):
         if matched and words_with_tags[idx]['tag'] == matched_tag:
-            # matched_patterns_with_tags.append(words_with_tags[idx]['pattern'])
+            # matched_patterns_with_tags.append(words_with_tags[idx]['pattern']) 
             print(words_with_tags[idx]['pattern'])
+            # NAME_OF_CLASS = words_with_tags[idx]['pattern']
+            # print (NAME_OF_CLASS)
             matched_patterns_with_tags.append(str(idx))
 
     # print(matched_patterns_with_tags)
@@ -95,7 +98,9 @@ def getResponse(patterns, name=""):
     if not patterns:
         return 'Sorry I do not understand.'
 
+
     res = anime.search(patterns, name)
+    
     return 'Hope you enjoy watching these animes.'
 
 
@@ -122,7 +127,7 @@ def chat():
             if len(inp_name):
                 results = chatbot_response(inp, inp_name[0])
             results = chatbot_response(inp)
-            # print(results)
+        # print(results)
 
 
 chat()

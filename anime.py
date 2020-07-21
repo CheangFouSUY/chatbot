@@ -11,12 +11,20 @@ from jikanpy import Jikan
 jikan = Jikan()
 
 MAX_GENRES_SEARCH = 4
+INDEX_OF_INFO = 46
 
 
 def search(patterns, query=""):
     print('Loading...')
+    print(patterns)
+        
     # when it is similar
     if len(query):
+
+        isInfo = False
+        if int(patterns[0]) >= INDEX_OF_INFO:
+            isInfo = True
+
         patterns = []
         search = jikan.search('anime', query,
                               parameters={'order_by': 'title', 'limit': 1})
@@ -28,30 +36,55 @@ def search(patterns, query=""):
             # print(anime_id)
 
         # check for genres using jika.anime
-        all_genre = jikan.anime(anime_id)["genres"]
+        anime_info = jikan.anime(anime_id)
+        all_genre = anime_info["genres"]
         # print(all_genre)
 
+        #when index is in info intent, go with this one
+        if(isInfo):
+            print("Title: " + anime_info['title'])
+            print("\nDescription: " + anime_info['synopsis'][0:300] + "...")
+            print("\nStatus: " + anime_info['status'])
+            print("\n\nGenres: ")
+            # found all genres in the anime, push the id
+            for (idx, r) in enumerate(all_genre):
+                print(str(r['name']))
+            print ()
+
+        #otherwise, it means just serach similar
+        else:
         # found all genres in the anime, push the id
-        for (idx, r) in enumerate(all_genre):
-            patterns.append(str(r['mal_id']))
+            for (idx, r) in enumerate(all_genre):
+                patterns.append(str(r['mal_id']))
 
-        # if too many genres, remove the last few
-        if (len(patterns) >= MAX_GENRES_SEARCH):
-            patterns = patterns[:len(
-                patterns)-(len(patterns) % MAX_GENRES_SEARCH)]
-        print(patterns)
-        query = ""
+            # if too many genres, remove the last few
+            if (len(patterns) >= MAX_GENRES_SEARCH):
+                patterns = patterns[:len(
+                    patterns)-(len(patterns) % MAX_GENRES_SEARCH)]
+            print(patterns)
+            query = ""
+            search = jikan.search('anime', query,
+                            parameters={'genre': ','.join(patterns), 'order_by': 'members', 'limit': 10})
+            res = search['results']
 
+            print()
+            for (idx, r) in enumerate(res):
+                print('Title: ' + r['title'])
+                print('Description: ' + r['synopsis'][0:100] + '...')
+                print()
+
+    
     # search genre
-    search = jikan.search('anime', query,
-                          parameters={'genre': ','.join(patterns), 'order_by': 'members', 'limit': 10})
-    res = search['results']
+    else:
+        search = jikan.search('anime', query,
+                            parameters={'genre': ','.join(patterns), 'order_by': 'members', 'limit': 10})
+        res = search['results']
 
-    print()
-    for (idx, r) in enumerate(res):
-        print('Title: ' + r['title'])
-        print('Description: ' + r['synopsis'][0:100] + '...')
         print()
+        for (idx, r) in enumerate(res):
+            print('Title: ' + r['title'])
+            print('Description: ' + r['synopsis'][0:100] + '...')
+            print()
 
     if (len(res) == 0):
         print("No results found")
