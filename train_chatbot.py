@@ -111,7 +111,7 @@ model.add(Dense(128, input_shape=(len(train_x[0]),), activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.5))
-# activation softmax is return the probability on the interval(0,1)
+# activation softmax returns the probability on the interval(0,1)
 model.add(Dense(len(train_y[0]), activation='softmax'))
 
 # Compile model. Stochastic gradient descent with Nesterov accelerated gradient gives good results for this model
@@ -120,6 +120,9 @@ model.compile(loss='categorical_crossentropy',
               optimizer=sgd, metrics=['accuracy'])
 
 # fitting and saving the model
+# epoch = how many times you go through your training set.
+# batch size = number of samples it selectes in each training
+# verbose just show progress bar when training
 hist = model.fit(np.array(train_x), np.array(train_y),
                  epochs=200, batch_size=5, verbose=1)
 model.save('chatbot_model.h5', hist)

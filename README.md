@@ -1,4 +1,18 @@
-# Simple-Python-Chatbot
+# Anime Search Engine Chatbot
 
-Creating a simple Python chatbot using natural language processing and deep learning.
+## [Github](https://github.com/rancou/chatbot) Source code
+
+
+## Train model
+```
+$ python3 train_chatbot.py
+```
+
+## Start the program
+```
+$ python3 index.py
+```
+
+
+
 

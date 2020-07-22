@@ -96,8 +96,8 @@ def predict_class(sentence, model):
 #     return result
 
 def getResponse(patterns, name=""):
-    if not patterns:
-        return 'Sorry I do not understand.'
+    if len(patterns) == 0:
+        return print('Sorry I do not understand.')
 
     res = anime.search(patterns, name)
 
