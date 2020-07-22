@@ -53,7 +53,7 @@ print(len(classes), "classes", classes)
 
 print(len(words), "unique lemmatized words", words)
 
-
+# convert words into byte stream file
 pickle.dump(words, open('words.pkl', 'wb'))
 pickle.dump(classes, open('classes.pkl', 'wb'))
 pickle.dump(words_with_tags, open('words_with_tags.pkl', 'wb'))
@@ -86,14 +86,32 @@ train_x = list(training[:, 0])
 train_y = list(training[:, 1])
 print("Training data created")
 
-
 # Create model - 3 layers. First layer 128 neurons, second layer 64 neurons and 3rd output layer contains number of neurons
 # equal to number of intents to predict output intent with softmax
+
+# | Number of Hidden Layers | Result |
+#  0 - Only capable of representing linear separable functions or decisions.
+#  1 - Can approximate any function that contains a continuous mapping
+# from one finite space to another.
+#  2 - Can represent an arbitrary decision boundary to arbitrary accuracy
+# with rational activation functions and can approximate any smooth
+# mapping to any accuracy.
+
+# A Sequential model is appropriate for a plain stack of layers where each layer has exactly one input and one output.
 model = Sequential()
+# Create a layer with 128 neurons
+# Dense is just a word for fully-connected neural network
+# Fully connected neural networks (FCNNs) are a type of artificial neural network where the architecture is such that all the nodes, or neurons, in one layer are connected to the neurons in the next layer.
+# input_shape takes in the tuple that represents dimension of the layer. In this case, it is just one-dimensional
+# len(train_x[0]) is the number of patterns // 51
+# activation is a function that defines how the output should be, given the input
+# activation relu is rectified linear unit activation, it works like max(0, x)
 model.add(Dense(128, input_shape=(len(train_x[0]),), activation='relu'))
+# Dropout is used to ignore some nodes which means when we create 128 neurons/node, we only selected half of it so that the selected nodes are more spreaded out
 model.add(Dropout(0.5))
 model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.5))
+# activation softmax is return the probability on the interval(0,1)
 model.add(Dense(len(train_y[0]), activation='softmax'))
 
 # Compile model. Stochastic gradient descent with Nesterov accelerated gradient gives good results for this model

@@ -65,7 +65,7 @@
     },
     {
       "tag": "information",
-      "patterns": ["detail", "info", "information", "more"],
+      "patterns": ["detail", "info", "information", "more", "about"],
       "responses": ["information"],
       "context": [""]
     }
